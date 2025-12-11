@@ -1,0 +1,41 @@
+MODULE c10ex13;
+
+IMPORT In, Out, Strings;
+
+VAR
+  palavra: ARRAY 128 OF CHAR;
+  sub: ARRAY 128 OF CHAR;
+  i, j, tamanhoPalavra: INTEGER;
+  pausa, ch: CHAR;
+
+BEGIN
+  Out.String("Entre uma palavra: ");
+
+  i := 0;
+  REPEAT
+    In.Char(ch);
+    IF (ch # 0DX) & (ch # 0AX) & (i < LEN(palavra) - 1) THEN
+      palavra[i] := ch;
+      INC(i);
+    END;
+  UNTIL (ch = 0DX) OR (ch = 0AX);
+  palavra[i] := 0X;
+
+  Out.Ln;
+  
+  tamanhoPalavra := Strings.Length(palavra);
+
+  FOR i := 0 TO tamanhoPalavra - 1 DO
+    FOR j := 0 TO tamanhoPalavra - i - 2 DO
+      Out.Char(' ');
+    END;
+
+    Strings.Extract(palavra, tamanhoPalavra - i - 1, i + 1, sub);
+    Out.String(sub);
+    Out.Ln;
+  END;
+
+  Out.Ln;
+  Out.String("Tecle <Enter> para encerrar... ");
+  In.Char(pausa);
+END c10ex13.
